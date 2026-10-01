@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 """
-Initialize the models package.
+Initialize models package and set up storage instance.
 """
-from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+
+storage = FileStorage()
+storage.reload()
