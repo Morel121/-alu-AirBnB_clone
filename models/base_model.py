@@ -13,14 +13,28 @@ class BaseModel:
     for other classes in the project.
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Initializes a new instance of BaseModel.
-        Assigns unique id and creation/update timestamps.
+        
+        Args:
+            *args: Unused positional arguments.
+            **kwargs: Key/value pairs of attributes to initialize from dictionary.
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
+        
+        if kwargs and len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key == "__class__":
+                    continue
+                elif key in ("created_at", "updated_at"):
+                    setattr(self, key, datetime.strptime(value, time_format))
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """
