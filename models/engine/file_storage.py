@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 FileStorage Engine
+Handles serialization and deserialization of instances to/from JSON.
 """
 import json
 import os
@@ -14,7 +15,7 @@ class FileStorage:
     __objects = {}
 
     def all(self, cls=None):
-        """Returns the dictionary __objects."""
+        """Returns the dictionary __objects, optionally filtered by class."""
         if cls is not None:
             if isinstance(cls, str):
                 cls = eval(cls)
